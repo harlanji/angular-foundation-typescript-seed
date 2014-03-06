@@ -1,0 +1,16 @@
+{
+  "name": "foundation-angular-typescript-seed",
+  "version": "0.0.0.1",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.1.1",
+    "angularjs": "*"
+  }
+}
