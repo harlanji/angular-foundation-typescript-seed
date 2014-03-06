@@ -10,6 +10,15 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "~3.4.8"
+    "express": "~3.4.8",
+    "gulp": "~3.5.5"
+  },
+  "devDependencies": {
+    "gulp-browserify": "~0.4.6",
+    "gulp-util": "~2.2.14",
+    "gulp-concat": "~2.1.7",
+    "browserify": "~3.32.0",
+    "gulp-rename": "~1.2.0",
+    "gulp-changed": "~0.2.1"
   }
 }
