@@ -22,6 +22,9 @@
     "gulp-changed": "~0.2.1",
     "bower": "~1.2.8",
     "gulp-sass": "~0.7.1",
-    "gulp-symlink": "~0.4.1"
+    "gulp-symlink": "~0.4.1",
+    "gulp-clean": "~0.2.4",
+    "gulp-typescript": "~0.1.0",
+    "tsd": "~0.5.6"
   }
 }

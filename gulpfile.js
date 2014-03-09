@@ -1,9 +1,16 @@
 'use strict';
 
-var distDeps = ['build/public/js/app.js', 
-                'build/public/js/css/app.css', 
-                'build/server.js'
-                ];
+var paths = {
+  serverJs: ['server.js'],
+  clientJs: ['client.js'], 
+  clientTs: ['client.ts'], 
+  sass: 'app.sass',
+  typings: 'typings',
+
+  dist: ['build/public/js/app.js', 
+    'build/public/css/app.css', 
+    'build/server.js'],
+};
 
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
@@ -13,11 +20,19 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     changed = require('gulp-changed'),
     sass = require('gulp-sass'),
-    symlink = require('gulp-symlink')
+    symlink = require('gulp-symlink'),
+    clean = require('gulp-clean'),
+    typescript = require('gulp-typescript')
     ;
 
+
 gulp.task('build/public/js/app.js', function () {
-  return gulp.src('client.js')
+  return gulp.src(paths.clientTs)
+    .pipe(typescript({
+      sourcemap: true,
+      module: 'commonjs',
+      //target: 'ES5'
+    }))
     .pipe(browserify({
       standalone: 'app',
       builtins: true,
@@ -27,12 +42,23 @@ gulp.task('build/public/js/app.js', function () {
     .pipe(gulp.dest('build/public/js'));
 });
 
+// gulp.task('build/public/js/app.js', function () {
+//   return gulp.src(paths.clientJs)
+//     .pipe(browserify({
+//       standalone: 'app',
+//       builtins: true,
+//       debug : !process.env.ENV == 'production'
+//     }))
+//     .pipe(rename('app.js'))
+//     .pipe(gulp.dest('build/public/js'));
+// });
 
-gulp.task('build/public/js/css/app.css', function () {
-  return gulp.src('app.sass')
-    .pipe(changed('build/public/js/css/app.css'))
+
+gulp.task('build/public/css/app.css', function () {
+  return gulp.src(paths.sass)
+    //.pipe(changed('build/public/css/app.css'))
     .pipe(sass({
-      //sourceComments: 'map',
+      sourceComments: 'map',
       // includePaths: [],
       // imagePth: '',
     }))
@@ -41,17 +67,23 @@ gulp.task('build/public/js/css/app.css', function () {
 });
 
 gulp.task('build/server.js', function () {
-  return gulp.src('server.js')
+  return gulp.src(paths.serverJs)
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('dist', distDeps, function () {
-  return gulp.src(['./node_modules/**', './bower_components/**', './public/**'], {base: './'})
+gulp.task('clean', function () {
+  return gulp.src(['build', 'dist', 'dev'], {read: false})
+    .pipe(clean({force: true}));
+});
+
+
+gulp.task('dist', paths.dist, function () {
+  return gulp.src(['./node_modules/**', './bower_components/**', './public/**', './typings/**'], {base: './'})
     .pipe(changed('dist'))
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('dev', distDeps, function () {
+gulp.task('dev', paths.dist, function () {
   return [
     gulp.src('build/**')
       .pipe(gulp.dest('dev')),
@@ -63,8 +95,19 @@ gulp.task('dev', distDeps, function () {
       .pipe(symlink('dev')),
 
     gulp.src('public')
-      .pipe(symlink('dev'))
+      .pipe(symlink('dev')),
+
+    gulp.src('typings')
+      .pipe(symlink('dev')),
+
     ];
+});
+
+gulp.task('watch', ['dev'], function () {
+  // TODO merge watch paths and use changed() for all tasks, for a 
+  //      single call to watch that does minimal work.
+  gulp.watch(paths.clientJs, ['dev']);
+  gulp.watch(paths.sass, ['build/public/css/app.css', 'dev']);
 });
 
 gulp.task('default', ['dev']);
