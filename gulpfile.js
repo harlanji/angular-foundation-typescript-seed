@@ -8,9 +8,12 @@ var paths = {
   typings: 'typings',
 
   dist: ['build/public/js/app.js', 
+  'build/public/index-jade.html',
     'build/public/css/app.css', 
     'build/server.js'],
 };
+
+var isDebug = process.env.ENV != 'production';
 
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
@@ -22,7 +25,8 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     symlink = require('gulp-symlink'),
     clean = require('gulp-clean'),
-    typescript = require('gulp-typescript')
+    typescript = require('gulp-typescript'),
+    jade = require('gulp-jade')
     ;
 
 
@@ -36,7 +40,7 @@ gulp.task('build/public/js/app.js', function () {
     .pipe(browserify({
       standalone: 'app',
       builtins: true,
-      debug : !process.env.ENV == 'production'
+      debug: isDebug
     }))
     .pipe(rename('app.js'))
     .pipe(gulp.dest('build/public/js'));
@@ -64,6 +68,15 @@ gulp.task('build/public/css/app.css', function () {
     }))
     .pipe(rename('app.css'))
     .pipe(gulp.dest('build/public/css'));
+});
+
+gulp.task('build/public/index-jade.html', function () {
+  return gulp.src('src/assets/index.jade')
+    .pipe(jade({
+      pretty: isDebug
+    }))
+    .pipe(rename('index-jade.html'))
+    .pipe(gulp.dest('build/public'));
 });
 
 gulp.task('build/server.js', function () {

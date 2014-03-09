@@ -25,6 +25,7 @@
     "gulp-symlink": "~0.4.1",
     "gulp-clean": "~0.2.4",
     "gulp-typescript": "~0.1.0",
-    "tsd": "~0.5.6"
+    "tsd": "~0.5.6",
+    "gulp-jade": "~0.4.2"
   }
 }
