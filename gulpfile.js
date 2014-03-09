@@ -38,7 +38,7 @@ gulp.task('build/public/js/app.js', function () {
       //target: 'ES5'
     }))
     .pipe(browserify({
-      standalone: 'app',
+      standalone: 'client',
       builtins: true,
       debug: isDebug
     }))

@@ -1,5 +1,5 @@
 doctype html
-html.no-js(lang='en', ng-app)
+html.no-js(lang='en', ng-app='client')
   head
       meta(charset='utf-8')
       meta(name='viewport', content='width=device-width, initial-scale=1.0')
@@ -13,15 +13,66 @@ html.no-js(lang='en', ng-app)
       link(rel='stylesheet', href='css/app.css')
       script(src='bc/modernizr/modernizr.js')
     body
-      section(ng-controller='app.HelloCtrl')
-        .row
+      nav.top-bar(data-topbar='data-topbar')
+        ul.title-area
+            li.name
+              h1
+                a(href='#') My Site
+            li.toggle-topbar.menu-icon
+              a(href='#') Menu
+          section.top-bar-section
+            //
+               Right Nav Section 
+            ul.right
+              li.active
+                a(href='#') Right Button Active
+              li.has-dropdown
+                a(href='#') Right Button with Dropdown
+                ul.dropdown
+                  li
+                    a(href='#') First link in dropdown
+            //
+               Left Nav Section 
+            ul.left
+              li
+                a(href='#') Left Nav Button
+
+
+      section(ng-controller='HelloCtrl')
+        .row(ng-cloak)
           .large-3.columns
             p {{greeting}}
           .large-9.columns
             p {{name}}!
+
+      section(ng-controller='AlertDemoCtrl')
+        alert(ng-repeat='alert in alerts', type='alert.type', close='closeAlert($index)') 
+          | {{alert.msg}}
+        button.button(ng-click='addAlert()') Add Alert
+
+      section(ng-controller='ModalDemoCtrl')
+        button.button(ng-click='open()') Open me!
+        div(ng-show='selected') Selection from a modal: {{ selected }}
+
+
+
       script(src='bc/jquery/dist/jquery.js')
       script(src='bc/foundation/js/foundation.min.js')
       script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js')
+      script(src='bc/angular-foundation/mm-foundation-tpls.min.js')
       script(src='js/app.js')
       script.
         $(document).foundation();
+
+
+      script(id='myModalContent.html', type='text/ng-template')
+        div
+          h3 I'm a modal!
+          ul
+            li(ng-repeat='item in items')
+              a(ng-click='selected.item = item') {{ item }}
+          p
+            | Selected:
+            b {{ selected.item }}
+          button.button(ng-click='ok()') OK
+          a.close-reveal-modal(ng-click='cancel()') ×
