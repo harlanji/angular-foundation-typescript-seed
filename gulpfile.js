@@ -7,7 +7,7 @@ var paths = {
   sass: 'app.sass',
   typings: 'typings',
 
-  dist: ['build/public/js/app.js', 
+  dist: ['build/public/js/client.js', 
   'build/public/index-jade.html',
     'build/public/css/app.css', 
     'build/server.js'],
@@ -25,15 +25,15 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     symlink = require('gulp-symlink'),
     clean = require('gulp-clean'),
-    typescript = require('gulp-typescript'),
+    typescript = require('gulp-tsc'),
     jade = require('gulp-jade')
     ;
 
 
-gulp.task('build/public/js/app.js', function () {
+gulp.task('build/public/js/client.js', function () {
   return gulp.src(paths.clientTs)
     .pipe(typescript({
-      sourcemap: true,
+      //sourcemap: true,
       module: 'commonjs',
       //target: 'ES5'
     }))
@@ -42,18 +42,18 @@ gulp.task('build/public/js/app.js', function () {
       builtins: true,
       debug: isDebug
     }))
-    .pipe(rename('app.js'))
+    .pipe(rename('client.js'))
     .pipe(gulp.dest('build/public/js'));
 });
 
-// gulp.task('build/public/js/app.js', function () {
+// gulp.task('build/public/js/client.js', function () {
 //   return gulp.src(paths.clientJs)
 //     .pipe(browserify({
 //       standalone: 'app',
 //       builtins: true,
 //       debug : !process.env.ENV == 'production'
 //     }))
-//     .pipe(rename('app.js'))
+//     .pipe(rename('client.js'))
 //     .pipe(gulp.dest('build/public/js'));
 // });
 

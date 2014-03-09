@@ -26,6 +26,7 @@
     "gulp-clean": "~0.2.4",
     "gulp-typescript": "~0.1.0",
     "tsd": "~0.5.6",
-    "gulp-jade": "~0.4.2"
+    "gulp-jade": "~0.4.2",
+    "gulp-tsc": "~0.5.0"
   }
 }
