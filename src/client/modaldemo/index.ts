@@ -1,45 +1,5 @@
-/// <reference path="/root/p/foundation-angular-typescript-seed/typings/angularjs/angular.d.ts" />
 
-
-var clientModule = angular.module('client', ['mm.foundation']);
-
-
-export interface IHelloScope {
-  greeting: string;
-  name: string;
-}
-
-export class HelloCtrl {
-  constructor($scope: IHelloScope) {
-    $scope.greeting = 'Hello';
-    $scope.name = 'WorldTS';
-  }
-}
-
-export interface IAlertDemoScope extends ng.IScope {
-  alerts: Object[];
-
-  addAlert: Function;
-  closeAlert: Function;
-
-}
-
-export class AlertDemoCtrl {
-  constructor ($scope: IAlertDemoScope) {
-    $scope.alerts = [
-      { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
-      { type: 'success round', msg: 'Well done! You successfully read this important alert message.' }
-    ];
-
-    $scope.addAlert = function() {
-      $scope.alerts.push({msg: "Another alert!"});
-    };
-
-    $scope.closeAlert = function(index) {
-      $scope.alerts.splice(index, 1);
-    };
-  }
-}
+/// <reference path="../_all.d.ts" />
 
 export interface IModalDemoScope extends ng.IScope {
   items: string[];
@@ -99,10 +59,9 @@ export class ModalInstanceCtrl {
   }
 }
 
-
-clientModule
-  .controller('HelloCtrl', HelloCtrl)
-  .controller('AlertDemoCtrl', AlertDemoCtrl)
-  .controller('ModalDemoCtrl', ModalDemoCtrl)
-  .controller('ModalInstanceCtrl', ModalInstanceCtrl)
-  ;
+var mod;
+export function $ng () {
+  return mod || (mod = angular.module('client.modaldemo', ['mm.foundation'])
+    .controller('ModalDemoCtrl', ['$scope', '$modal', '$log', ($scope, $modal, $log) => new ModalDemoCtrl($scope, $modal, $log)])
+    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', ($scope, $modalInstance, items) => new ModalInstanceCtrl($scope, $modalInstance, items)]));
+}

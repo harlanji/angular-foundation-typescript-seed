@@ -3,7 +3,7 @@
 var paths = {
   serverJs: ['server.js'],
   clientJs: ['client.js'], 
-  clientTs: ['client.ts'], 
+  clientTs: 'src/client/index.ts', 
   sass: 'app.sass',
   typings: 'typings',
 
@@ -35,12 +35,12 @@ gulp.task('build/public/js/client.js', function () {
     .pipe(typescript({
       //sourcemap: true,
       module: 'commonjs',
+      outDir: 'build/public/js'
+      //ßallowImportModule: true
       //target: 'ES5'
     }))
     .pipe(browserify({
       standalone: 'client',
-      builtins: true,
-      debug: isDebug
     }))
     .pipe(rename('client.js'))
     .pipe(gulp.dest('build/public/js'));
