@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="client" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation 5</title>
+    <!--If you are using CSS version, only link these 2 files, you may add app.css to use for your overrides if you like. 
+    -->
+    <link rel="stylesheet" href="bc/foundation/css/normalize.css">
+    <link rel="stylesheet" href="bc/foundation/css/foundation.css">
+    <!--If you are using the gem version, you need this only 
+    -->
+    <link rel="stylesheet" href="css/app.css">
+    <script src="bc/modernizr/modernizr.js"></script>
+  </head>
+  <body>
+    <nav data-topbar="data-topbar" class="top-bar">
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#">My Site</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+      </ul>
+      <section class="top-bar-section">
+        <!--Right Nav Section 
+        -->
+        <ul class="right">
+          <li class="active"><a href="#">Right Button Active</a></li>
+          <li class="has-dropdown"><a href="#">Right Button with Dropdown</a>
+            <ul class="dropdown">
+              <li><a href="#">First link in dropdown</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!--Left Nav Section 
+        -->
+        <ul class="left">
+          <li><a href="#">Left Nav Button</a></li>
+        </ul>
+      </section>
+    </nav>
+    <section ng-controller="HelloCtrl">
+      <div ng-cloak class="row">
+        <div class="large-3 columns">
+          <p>{{greeting}}</p>
+        </div>
+        <div class="large-9 columns">
+          <p>{{name}}!</p>
+        </div>
+      </div>
+    </section>
+    <section ng-controller="AlertDemoCtrl">
+      <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+      <button ng-click="addAlert()" class="button">Add Alert</button>
+    </section>
+    <section ng-controller="ModalDemoCtrl">
+      <button ng-click="open()" class="button">Open me!</button>
+      <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+    </section>
+    <script src="bc/jquery/dist/jquery.js"></script>
+    <script src="bc/foundation/js/foundation.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
+    <script src="bc/angular-foundation/mm-foundation-tpls.min.js"></script>
+    <script src="js/client.js"></script>
+    <script>
+      client.$ng()
+      $(document).foundation();
+      
+      
+    </script>
+    <script id="myModalContent.html" type="text/ng-template">
+      <div>
+        <h3>I'm a modal!</h3>
+        <ul>
+          <li ng-repeat="item in items"><a ng-click="selected.item = item">{{ item }}</a></li>
+        </ul>
+        <p>Selected:<b>{{ selected.item }}</b></p>
+        <button ng-click="ok()" class="button">OK</button><a ng-click="cancel()" class="close-reveal-modal">×</a>
+      </div>
+    </script>
+  </body>
+</html>

@@ -1,5 +1,7 @@
 /// <reference path="_all.d.ts" />
 
+import alertDemo = require('./alertdemo');
+
 export interface IHelloScope {
   greeting: string;
   name: string;
@@ -14,6 +16,6 @@ export class HelloCtrl {
 
 var mod : ng.IModule;
 export function $ng () {
-  return mod || (mod = angular.module('client.hello', [])
+  return mod || (mod = angular.module('client.hello', [alertDemo.$ng().name])
     .controller('HelloCtrl', ['$scope', ($scope) => new HelloCtrl($scope)]));
 }

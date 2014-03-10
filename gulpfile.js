@@ -29,21 +29,23 @@ var gulp = require('gulp'),
     jade = require('gulp-jade')
     ;
 
-
-gulp.task('build/public/js/client.js', function () {
+gulp.task('build/ts', function () {
   return gulp.src(paths.clientTs)
     .pipe(typescript({
-      //sourcemap: true,
-      module: 'commonjs',
-      outDir: 'build/public/js'
-      //ßallowImportModule: true
-      //target: 'ES5'
+      sourcemap: false,
+      srcRoot: 'src/client',
+      outDir: 'build/ts'
     }))
-    .pipe(browserify({
-      standalone: 'client',
-    }))
+    .pipe(gulp.dest('build/ts'))
+    ;
+});
+
+gulp.task('build/public/js/client.js', ['build/ts'], function () {
+  return gulp.src('build/ts/index.js')
+    .pipe(browserify({standalone: 'client'}))
     .pipe(rename('client.js'))
-    .pipe(gulp.dest('build/public/js'));
+    .pipe(gulp.dest('build/public/js'))
+    ;
 });
 
 // gulp.task('build/public/js/client.js', function () {

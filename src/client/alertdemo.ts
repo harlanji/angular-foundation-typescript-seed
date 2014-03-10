@@ -1,8 +1,13 @@
 /// <reference path="_all.d.ts" />
 
 
+export interface Alert {
+  type?: string;
+  msg: string;
+}
+
 export interface IAlertDemoScope extends ng.IScope {
-  alerts: Object[];
+  alerts: Alert[];
 
   addAlert: Function;
   closeAlert: Function;
@@ -28,6 +33,10 @@ export class AlertDemoCtrl {
 
 var mod;
 export function $ng () {
-  return mod || (mod = angular.module('client.alertdemo', ['mm.foundation'])
+  console.log('alertdemo.$ng()');
+  if (!mod) {
+    console.log('alertdemo.$ng() new');
+  }
+  return mod || (mod = angular.module('client.alertdemo', ['mm.foundation'], [function () { console.log('configuring client.alertdemo'); }])
     .controller('AlertDemoCtrl', ['$scope', ($scope) => new AlertDemoCtrl($scope)]));
 }

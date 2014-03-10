@@ -30,6 +30,10 @@ export class ModalDemoCtrl {
       });
     }
   }
+
+  public static injector() {
+    return ['$scope', ]
+  }
 }
 
 export interface IModalInstanceScope extends ng.IScope {
@@ -62,6 +66,8 @@ export class ModalInstanceCtrl {
 var mod;
 export function $ng () {
   return mod || (mod = angular.module('client.modaldemo', ['mm.foundation'])
-    .controller('ModalDemoCtrl', ['$scope', '$modal', '$log', ($scope, $modal, $log) => new ModalDemoCtrl($scope, $modal, $log)])
-    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', ($scope, $modalInstance, items) => new ModalInstanceCtrl($scope, $modalInstance, items)]));
+    .controller('ModalDemoCtrl', ['$scope', '$modal', '$log', 
+      ($scope, $modal, $log) => new ModalDemoCtrl($scope, $modal, $log)])
+    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', 
+      ($scope, $modalInstance, items) => new ModalInstanceCtrl($scope, $modalInstance, items)]));
 }

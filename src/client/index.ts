@@ -5,11 +5,13 @@ import hello = require('./hello');
 import alertDemo = require('./alertdemo');
 import modalDemo =  require('./modaldemo/index');
 
+
 var mod : ng.IModule;
 export function $ng () {
-  hello.$ng();
-  alertDemo.$ng();
-  modalDemo.$ng();
 
-  return mod || (mod = angular.module('client', ['client.hello', 'client.alertdemo', 'client.modaldemo']));
+  return mod || (mod = angular.module('client', 
+    [hello.$ng().name, alertDemo.$ng().name, modalDemo.$ng().name], 
+    [function () {
+      console.log('configuring client');
+    }]));
 };
