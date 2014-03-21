@@ -1,6 +1,8 @@
 
 /// <reference path="../_all.d.ts" />
 
+import modal = mm.foundation.modal;
+
 export interface IModalDemoScope extends ng.IScope {
   items: string[];
   open: Function;
@@ -13,7 +15,7 @@ export class ModalDemoCtrl {
     $scope.items = ['item1', 'item2', 'item3'];
     $scope.open = function () {
 
-      var modalInstance = $modal.open({
+      var modalInstance: modal.IModalInstance = $modal.open({
         templateUrl: 'myModalContent.html',
         controller: 'ModalInstanceCtrl',
         resolve: {
@@ -47,7 +49,7 @@ export interface IModalInstanceScope extends ng.IScope {
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 export class ModalInstanceCtrl {
-  constructor ($scope: IModalInstanceScope, $modalInstance, items) {
+  constructor ($scope: IModalInstanceScope, $modalInstance: modal.IModalInstance, items) {
     $scope.items = items;
     $scope.selected = {
       item: $scope.items[0]

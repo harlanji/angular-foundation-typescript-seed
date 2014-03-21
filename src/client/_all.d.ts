@@ -1,2 +1,3 @@
-/// <reference path="/root/p/foundation-angular-typescript-seed/typings/angularjs/angular.d.ts" />
-/// <reference path="/root/p/foundation-angular-typescript-seed/typings/node/node.d.ts" />
+/// <reference path="../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../typings/node/node.d.ts" />
+/// <reference path="angular-ui-foundation.d.ts" />
